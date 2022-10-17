@@ -2,13 +2,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.toList;
 
 public class MovieAnalyzer {
 
@@ -409,7 +403,6 @@ public class MovieAnalyzer {
             for (Movie movie: lines) {
                 if (movie.getStar1().equals(actor) || movie.getStar2().equals(actor)
                         || movie.getStar3().equals(actor) || movie.getStar4().equals(actor)) {
-
                     rating_gross[0] = rating_gross[0] + movie.getImdbRating();
                     if (movie.getGross() != 0) {
                         rating_gross[1] = rating_gross[1] + movie.getGross();
@@ -424,8 +417,7 @@ public class MovieAnalyzer {
             else rating_gross[1] = rating_gross[1]/count_gross;
             average_value.put(actor, rating_gross);
         }
-
-        if (by.equals("rating")) {
+        if (by.equals("rating")){
             result = sortStarRating(average_value);
             int count = 0;
             for (Map.Entry<String, double[]> entry: result.entrySet()) {
@@ -436,8 +428,7 @@ public class MovieAnalyzer {
                 }
             }
         }
-
-        if (by.equals("gross")) {
+        if (by.equals("gross")){
             result = sortStarGross(average_value);
             int count = 0;
             for (Map.Entry<String, double[]> entry: result.entrySet()) {
@@ -457,9 +448,7 @@ public class MovieAnalyzer {
             if (movie.getGenre().contains(genre) && movie.getImdbRating() >= min_rating && movie.getRuntime() <= max_runtime) {
                 movies.add(movie.getSeriesTitle());
             }
-
         }
-
         movies.sort(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
@@ -469,21 +458,4 @@ public class MovieAnalyzer {
 
         return movies;
     }
-
-//    public static void main(String[] args) throws IOException {
-//        MovieAnalyzer movieAnalyzer = new MovieAnalyzer("resources/imdb_top_500.csv");
-////        //System.out.println(movieAnalyzer.getMovieCountByYear());
-//        //System.out.println(movieAnalyzer.getMovieCountByGenre());
-////        System.out.println(lines.get(251).getSeriesTitle() + lines.get(251).getOverview().length());
-////        System.out.println(lines.get(251).getOverview());
-////        System.out.println(lines.get(211).getSeriesTitle() + lines.get(211).getOverview().length());
-////        System.out.println(lines.get(211).getOverview());
-////        System.out.println(movieAnalyzer.getTopMovies(20, "overview"));
-//        System.out.println(movieAnalyzer.getCoStarCount());
-//
-////        //System.out.println(movieAnalyzer.getTopMovies(20, "runtime"));
-////        //System.out.println(movieAnalyzer.searchMovies("Drama", 9, 150));
-//        //System.out.println(movieAnalyzer.getTopStars(80, "gross"));
-//
-//    }
 }
